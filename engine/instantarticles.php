@@ -45,7 +45,7 @@ else $category_id = false;
 $view_template = "rss";
 
 $config['allow_cache'] = true;
-$config['allow_banner'] = false;
+$config['allow_banner'] = true;
 $config['rss_number'] = intval( $config['rss_number'] );
 $config['rss_format'] = intval( $config['rss_format'] );
 $cstart = 0;
@@ -57,7 +57,8 @@ elseif( $_GET['do'] == 'cat' ) $config['home_title'] = stripslashes( $cat_info[$
 
 $rss_content = <<<XML
 <?xml version="1.0" encoding="{$config['charset']}"?>
-<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:media="http://search.yahoo.com/mrss/" xmlns:turbo="http://turbo.yandex.ru" version="2.0">
+<rss version="2.0"
+xmlns:content="http://purl.org/rss/1.0/modules/content/">
 <channel>
 <title>{$config['home_title']}</title>
 <link>{$config['http_home_url']}</link>
@@ -69,35 +70,16 @@ XML;
 if( !file_exists( $tpl->dir . "/instantarticles.tpl" ) ) {
 
 	$tpl->template = <<<HTML
-[shortrss]<item turbo="true">
-<title>{title}</title>
-<guid isPermaLink="true">{rsslink}</guid>
-<link>{rsslink}</link>
-<description>{short-story}</description>
-<turbo:content><![CDATA[{full-story}]]></turbo:content>
-<category>{category}</category>
-<dc:creator>{rssauthor}</dc:creator>
-<pubDate>{rssdate}</pubDate>
-</item>[/shortrss]
-[fullrss]<item turbo="true">
+<item>
 <title>{title}</title>
 <guid isPermaLink="true">{rsslink}</guid>
 <link>{rsslink}</link>
 <description><![CDATA[{short-story}]]></description>
-<turbo:content><![CDATA[{full-story}]]></turbo:content>
+<content:encoded><![CDATA[{full-story}]]></content:encoded>
 <category><![CDATA[{category}]]></category>
 <dc:creator>{rssauthor}</dc:creator>
 <pubDate>{rssdate}</pubDate>
-</item>[/fullrss]
-[yandexrss]<item turbo="true">
-<title>{title}</title>
-<link>{rsslink}</link>
-<description>{short-story}</description>
-<category>{category}</category>{images}
-<pubDate>{rssdate}</pubDate>
-<yandex:full-text>{full-story}</yandex:full-text>
-<turbo:content><![CDATA[{full-story}]]></turbo:content>
-</item>[/yandexrss]
+</item>
 HTML;
 
 	$tpl->copy_template = $tpl->template;
@@ -137,27 +119,22 @@ XML;
 		
 		$rss_content = <<<XML
 <?xml version="1.0" encoding="{$config['charset']}"?>
-<rss xmlns:content="http://purl.org/rss/1.0/modules/content/">
+<rss version="2.0"
+xmlns:content="http://purl.org/rss/1.0/modules/content/">
 <channel>
 <title>{$config['home_title']}</title>
 <link>{$config['http_home_url']}</link>
 <language>{$lang['wysiwyg_language']}</language>
 <description>{$config['home_title']}</description>
-<language>ru-RU</language>
 <generator>DataLife Engine</generator>
 XML;
 		
-		$tpl->template = str_replace( '[yandexrss]', '', $tpl->template );
-		$tpl->template = str_replace( '[/yandexrss]', '', $tpl->template );
 		$tpl->template = preg_replace( "'\\[fullrss\\](.*?)\\[/fullrss\\]'si", "", $tpl->template );
-		$tpl->template = preg_replace( "'\\[shortrss\\](.*?)\\[/shortrss\\]'si", "", $tpl->template );
 		$tpl->template = trim($tpl->template);		
 	} else {
 		
-		$tpl->template = str_replace( '[shortrss]', '', $tpl->template );
-		$tpl->template = str_replace( '[/shortrss]', '', $tpl->template );
+
 		$tpl->template = preg_replace( "'\\[fullrss\\](.*?)\\[/fullrss\\]'si", "", $tpl->template );
-		$tpl->template = preg_replace( "'\\[yandexrss\\](.*?)\\[/yandexrss\\]'si", "", $tpl->template );
 		$tpl->template = trim($tpl->template);	
 	}
 	
