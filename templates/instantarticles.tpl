@@ -1,31 +1,33 @@
 <item>
 	<title>{title}</title>
 	<link>{rsslink}</link>
-	<guid>{rsslink}</guid>
-	<pubDate>2014-12-11T04:44:16Z - {rssdate}</pubDate>
+	<guid>{news-id}</guid>
+	<pubDate>{rssdate}</pubDate>
 	<author>{rssauthor}</author>
-	<description><![CDATA[{short-story}]]></description>
+	<description>{short-story limit="140"}</description>
 	<content:encoded>
+		<![CDATA[
 		<!doctype html>
-		<html lang="en" prefix="op: http://media.facebook.com/op#">
+		<html lang="ru" prefix="op: http://media.facebook.com/op#">
 		  <head>
 		    <meta charset="utf-8">
-		    <link rel="canonical" href="http://example.com/article.html">
+		    <link rel="canonical" href="{rsslink}">
 		    <meta property="op:markup_version" content="v1.0">
 		  </head>
 		  <body>
 		    <article>
 		      <header>
-		        <!— Article header goes here -->
+		      	[image-1] <figure> <img src="{image-1}" /> <figcaption>{category}</figcaption> </figure> [/image-1] 
+		      	<h1>{title}</h1>
 		      </header>
-
-		      <!— Article body goes here -->
-		      	<![CDATA[{full-story}]]>
+		      	{full-story}
 		      <footer>
-		        <!— Article footer goes here -->
+	        	© All rights reserved.<br>
+	        	<small>Разработка и поддержка сайта - веб-студия TCSE-cms.com</small>
 		      </footer>
 		    </article>
 		  </body>
 		</html>
+		]]>
 	</content:encoded>
 </item>
