@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dleplugin>
+  <name>RSS instant articles</name>
+  <description>instant articles для Facebook в формате RSS</description>
+  <icon>engine/skins/images/instantarticles.png</icon>
+  <version>0.1</version>
+  <dleversion>13</dleversion>
+  <versioncompare>greater</versioncompare>
+  <upgradeurl></upgradeurl>
+  <filedelete>0</filedelete>
+  <mnotice>1</mnotice>
+  <mysqlinstall><![CDATA[]]></mysqlinstall>
+  <mysqlupgrade><![CDATA[]]></mysqlupgrade>
+  <mysqlenable><![CDATA[]]></mysqlenable>
+  <mysqldisable><![CDATA[]]></mysqldisable>
+  <mysqldelete><![CDATA[]]></mysqldelete>
+  <notice><![CDATA[
+    В .htaccess рядом с 
+
+  RewriteRule ^rss.xml$ index.php?mod=rss [L]
+
+дописываем
+
+  RewriteRule ^instantarticles.xml$ index.php?mod=instantarticles [L]
+  
+Всё. Теперь у нас есть две ленты RSS на сайте:
+
+site.ru/rss.xml - Стандартная лента движка с активной turbo настройкой;
+site.ru/instantarticles.xml - Добавленная лента без trubo.
+
+]]></notice>
+
+  <file name="engine/init.php">
+    <operation action="after">
+      <searchcode><![CDATA[} elseif($_GET['mod'] == "rss") {
+    include_once (DLEPlugins::Check(ENGINE_DIR . '/rss.php'));
+    die();
+  }]]></searchcode>
+      <replacecode><![CDATA[elseif($_GET['mod'] == "instantarticles") {
+    include_once (DLEPlugins::Check(ENGINE_DIR . '/instantarticles.php'));
+    die();
+  }]]></replacecode>
+    </operation>
+  </file>
+</dleplugin>
