@@ -25,8 +25,8 @@
   
 Всё. Теперь у нас есть две ленты RSS на сайте:
 
-site.ru/rss.xml - Стандартная лента движка с активной turbo настройкой;
-site.ru/instantarticles.xml - Добавленная лента без trubo.
+site.ru/rss.xml - Стандартная лента движка;
+site.ru/instantarticles.xml - RSS лента в формате instant articles полным текстом новостей.
 
 ]]></notice>
 

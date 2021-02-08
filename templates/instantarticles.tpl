@@ -1,10 +1,11 @@
 <item>
 	<title>{title}</title>
 	<link>{rsslink}</link>
-	<guid>{news-id}</guid>
+	<guid isPermaLink="false">{news-id}</guid>
 	<pubDate>{rssdate}</pubDate>
+    <modDate>{rssdate}</modDate>
 	<author>{rssauthor}</author>
-	<description>{short-story limit="140"}</description>
+	<![CDATA[{short-story limit="140"}]]>
 	<content:encoded>
 		<![CDATA[
 		<!doctype html>
@@ -17,7 +18,7 @@
 		  <body>
 		    <article>
 		      <header>
-		      	[image-1] <figure> <img src="{image-1}" /> <figcaption>{category}</figcaption> </figure> [/image-1] 
+		      	[image-1]<figure><img src="{image-1}" /><figcaption>{category}</figcaption></figure>[/image-1] 
 		      	<h1>{title}</h1>
 		      </header>
 		      	{full-story}

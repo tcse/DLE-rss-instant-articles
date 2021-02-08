@@ -44,10 +44,10 @@ else $category_id = false;
 
 $view_template = "rss";
 
-$config['allow_cache'] = true;
+$config['allow_cache'] = false;
 $config['allow_banner'] = true;
 $config['rss_number'] = intval( $config['rss_number'] );
-$config['rss_format'] = intval( $config['rss_format'] );
+$config['rss_format'] = 1;
 $cstart = 0;
 
 if ( $user ) $config['allow_cache'] = false;
