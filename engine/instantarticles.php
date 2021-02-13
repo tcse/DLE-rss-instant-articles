@@ -11,7 +11,7 @@
 =====================================================
  File: rss.php
 -----------------------------------------------------
- Use: the news feeds
+ Use: the news feeds Facebook instatn articles
 =====================================================
 */
 
@@ -44,10 +44,10 @@ else $category_id = false;
 
 $view_template = "rss";
 
-$config['allow_cache'] = false;
-$config['allow_banner'] = true;
-$config['rss_number'] = intval( $config['rss_number'] );
-$config['rss_format'] = 1;
+$config['allow_cache'] = true;
+$config['allow_banner'] = true; // Вывод банеров разрешен [banner_X] {banner_X} [/banner_X]
+$config['rss_number'] = intval( $config['rss_number'] ); // Количество экспортируемых новостей (из настроек RSS движка)
+$config['rss_format'] = 1; // 0 - Простой - выводит только текст новости без форматирования. 1 - Полный - выводит весь текст новости с сохранением форматирования и картинок. 
 $cstart = 0;
 
 if ( $user ) $config['allow_cache'] = false;
