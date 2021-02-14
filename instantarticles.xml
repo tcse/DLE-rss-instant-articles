@@ -1,45 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <dleplugin>
-  <name>RSS instant articles</name>
-  <description>instant articles для Facebook в формате RSS</description>
-  <icon>engine/skins/images/instantarticles.png</icon>
-  <version>0.1</version>
-  <dleversion>13</dleversion>
-  <versioncompare>greater</versioncompare>
-  <upgradeurl></upgradeurl>
-  <filedelete>0</filedelete>
-  <mnotice>1</mnotice>
-  <mysqlinstall><![CDATA[]]></mysqlinstall>
-  <mysqlupgrade><![CDATA[]]></mysqlupgrade>
-  <mysqlenable><![CDATA[]]></mysqlenable>
-  <mysqldisable><![CDATA[]]></mysqldisable>
-  <mysqldelete><![CDATA[]]></mysqldelete>
-  <notice><![CDATA[
-    В .htaccess рядом с 
+	<name>RSS instant articles</name>
+	<description>instant articles для Facebook в формате RSS</description>
+	<icon>engine/skins/images/instantarticles.png</icon>
+	<version>0.2</version>
+	<dleversion>13</dleversion>
+	<versioncompare>greater</versioncompare>
+	<upgradeurl></upgradeurl>
+	<filedelete>0</filedelete>
+	<needplugin></needplugin>
+	<mnotice>1</mnotice>
+	<mysqlinstall><![CDATA[]]></mysqlinstall>
+	<mysqlupgrade><![CDATA[]]></mysqlupgrade>
+	<mysqlenable><![CDATA[]]></mysqlenable>
+	<mysqldisable><![CDATA[]]></mysqldisable>
+	<mysqldelete><![CDATA[]]></mysqldelete>
+	<phpinstall><![CDATA[]]></phpinstall>
+	<phpupgrade><![CDATA[]]></phpupgrade>
+	<phpenable><![CDATA[]]></phpenable>
+	<phpdisable><![CDATA[]]></phpdisable>
+	<phpdelete><![CDATA[]]></phpdelete>
+	<notice><![CDATA[Установка количества новостей экспортируемых в instant articles задается в разделе [b]Настройки скрипта[/b] -> [b]Настройки системы[/b] вкладка RSS вписать необходимое количество.
 
-  RewriteRule ^rss.xml$ index.php?mod=rss [L]
+Для получения красивого адреса rss ленты для Фейстбук необходимо добавить правила редиректов.
 
-дописываем
+В .htaccess после строки
 
-  RewriteRule ^instantarticles.xml$ index.php?mod=instantarticles [L]
+[code]RewriteRule ^rss.xml$ index.php?mod=rss [L][/code]
+
+вставить
+
+[code]RewriteRule ^instantarticles.xml$ index.php?mod=instantarticles [L][/code]
   
 Всё. Теперь у нас есть две ленты RSS на сайте:
 
 site.ru/rss.xml - Стандартная лента движка;
-site.ru/instantarticles.xml - RSS лента в формате instant articles полным текстом новостей.
-
-]]></notice>
-
-  <file name="engine/init.php">
-    <operation action="after">
-      <searchcode><![CDATA[} elseif($_GET['mod'] == "rss") {
+site.ru/instantarticles.xml - RSS лента в формате instant articles полным текстом новостей.]]></notice>
+	<file name="engine/init.php">
+		<operation action="after">
+			<searchcode><![CDATA[} elseif($_GET['mod'] == "rss") {
     include_once (DLEPlugins::Check(ENGINE_DIR . '/rss.php'));
     die();
   }]]></searchcode>
-      <replacecode><![CDATA[elseif($_GET['mod'] == "instantarticles") {
+			<replacecode><![CDATA[elseif($_GET['mod'] == "instantarticles") {
     include_once (DLEPlugins::Check(ENGINE_DIR . '/instantarticles.php'));
     die();
   }]]></replacecode>
-    </operation>
-  </file>
+		</operation>
+	</file>
+	<file name="engine/inc/options.php">
+		<operation action="after">
+			<searchcode><![CDATA[showRow( $lang['opt_sys_nrss'], $lang['opt_sys_nrssd'], "<input  type=\"text\" class=\"form-control\" style=\"max-width:150px; text-align: center;\"  name='save_con[rss_number]' value=\"{$config['rss_number']}\">" );]]></searchcode>
+			<replacecode><![CDATA[// опция для instant articles
+	showRow( "Количество экспортируемых новостей в Фейсбук", "Укажите количество экспортируемых новостей в RSS поток instant articles<br>Адрес лента http://yoursite.com/instantarticles.xml", "<input  type=\"text\" class=\"form-control\" style=\"max-width:150px; text-align: center;\"  name='save_con[instantarticles_number]' value=\"{$config['instantarticles_number']}\">" );]]></replacecode>
+		</operation>
+	</file>
 </dleplugin>

@@ -46,7 +46,7 @@ $view_template = "rss";
 
 $config['allow_cache'] = true;
 $config['allow_banner'] = true; // Вывод банеров разрешен [banner_X] {banner_X} [/banner_X]
-$config['rss_number'] = intval( $config['rss_number'] ); // Количество экспортируемых новостей (из настроек RSS движка)
+$config['rss_number'] = intval( $config['instantarticles_number'] ); // Количество экспортируемых новостей (из настроек RSS движка)
 $config['rss_format'] = 1; // 0 - Простой - выводит только текст новости без форматирования. 1 - Полный - выводит весь текст новости с сохранением форматирования и картинок. 
 $cstart = 0;
 
