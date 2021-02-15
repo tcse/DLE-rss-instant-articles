@@ -7,7 +7,7 @@
 	<dleversion>13</dleversion>
 	<versioncompare>greater</versioncompare>
 	<upgradeurl></upgradeurl>
-	<filedelete>0</filedelete>
+	<filedelete>1</filedelete>
 	<needplugin></needplugin>
 	<mnotice>1</mnotice>
 	<mysqlinstall><![CDATA[]]></mysqlinstall>
@@ -20,22 +20,26 @@
 	<phpenable><![CDATA[]]></phpenable>
 	<phpdisable><![CDATA[]]></phpdisable>
 	<phpdelete><![CDATA[]]></phpdelete>
-	<notice><![CDATA[Установка количества новостей экспортируемых в instant articles задается в разделе [b]Настройки скрипта[/b] -> [b]Настройки системы[/b] вкладка RSS вписать необходимое количество.
+	<notice><![CDATA[1. 
+Установка количества новостей экспортируемых в instant articles задается в разделе [b]Настройки скрипта[/b] -> [b]Настройки системы[/b] вкладка [b]RSS[/b] вписать  в строку [b]Количество экспортируемых новостей в Фейсбук[/b] необходимое количество.
 
+2. 
 Для получения красивого адреса rss ленты для Фейстбук необходимо добавить правила редиректов.
 
-В .htaccess после строки
-
+В [b].htaccess[/b] после строки
 [code]RewriteRule ^rss.xml$ index.php?mod=rss [L][/code]
 
 вставить
-
 [code]RewriteRule ^instantarticles.xml$ index.php?mod=instantarticles [L][/code]
   
 Всё. Теперь у нас есть две ленты RSS на сайте:
 
 site.ru/rss.xml - Стандартная лента движка;
-site.ru/instantarticles.xml - RSS лента в формате instant articles полным текстом новостей.]]></notice>
+site.ru/instantarticles.xml - RSS лента в формате instant articles с полным текстом новостей.
+
+[h3]Дополнительная информация по формату instatn articles[/h3]
+Что такое Моментальные Статьи [url]https://developers.facebook.com/docs/instant-articles[/url]
+Как оформлять шаблоны [url]https://developers.facebook.com/docs/instant-articles/guides/format-overview/[/url]]]></notice>
 	<file name="engine/init.php">
 		<operation action="after">
 			<searchcode><![CDATA[} elseif($_GET['mod'] == "rss") {
